@@ -6,7 +6,7 @@
 #    By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 13:44:02 by eburnet           #+#    #+#              #
-#    Updated: 2023/12/18 14:33:35 by eburnet          ###   ########.fr        #
+#    Updated: 2023/12/18 14:35:47 by eburnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ HEADERS =
 	gcc $(CFLAGS) $(HEADERS) -c $<
 
 $(NAME): $(OBJS)
-	gcc $(SOURCES) -o $(NAME) $(CFLAGS) $(LINKS)
+	gcc $(SRCS) -o $(NAME) $(CFLAGS) $(LINKS)
 
 all : $(NAME)
 
