@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 10:26:16 by eburnet           #+#    #+#             */
-/*   Updated: 2023/12/19 15:51:32 by eburnet          ###   ########.fr       */
+/*   Updated: 2023/12/21 11:53:14 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+void my_key_function()
+{
+	
 }
 
 int	main(void)
@@ -35,82 +33,20 @@ int	main(void)
 	void	*mlx;
 	void	*mlx_win;
 	t_data	img;
-	int		i;
-	int		j;
+	int		img_width;
+	int		img_height;
+	char	*player = "./player.xpm";
+	char	*floor = "./floor.xpm";
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1200, 500, "Hello world!");
-	img.img = mlx_new_image(mlx, 1200, 500);
+	mlx_win = mlx_new_window(mlx, 500, 500, "So long");
+	img.img = mlx_new_image(mlx, 500, 500);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
-	// carré
-	i = 0;
-	j = 0;
-	while (i < 250)
-	{
-		my_mlx_pixel_put(&img, 150 + i, 150 + j, 0x00609C);
-		i++;
-	}
-	while (j < 250)
-	{
-		my_mlx_pixel_put(&img, 150 + i, 150 + j, 0x00609C);
-		j++;
-	}
-	i = 0;
-	while (i < 250)
-	{
-		my_mlx_pixel_put(&img, 150 + i, 150 + j, 0x00609C);
-		i++;
-	}
-	j = 0;
-	i = 0;
-	while (j < 250)
-	{
-		my_mlx_pixel_put(&img, 150 + i, 150 + j, 0x00609C);
-		j++;
-	}
-	// triangle
-	i = 0;
-	j = 0;
-	while (i < 250)
-	{
-		my_mlx_pixel_put(&img, 450 + i, 150 + j++, 0x00609C);
-		i++;
-	}
-	i = 0;
-	while (i < 250)
-	{
-		my_mlx_pixel_put(&img, 450 + i, 150 + j, 0x00609C);
-		i++;
-	}
-	j = 0;
-	i = 0;
-	while (j < 250)
-	{
-		my_mlx_pixel_put(&img, 450 + i, 150 + j, 0x00609C);
-		j++;
-	}
-	// rond
-	i = 0;
-	j = 0;
-	while (i < 250)
-	{
-		my_mlx_pixel_put(&img, 750 + i, 150 + j++, 0x00609C);
-		i++;
-	}
-	i = 0;
-	while (i < 250)
-	{
-		my_mlx_pixel_put(&img, 750 + i, 150 + j, 0x00609C);
-		i++;
-	}
-	j = 0;
-	i = 0;
-	while (j < 250)
-	{
-		my_mlx_pixel_put(&img, 750 + i, 150 + j, 0x00609C);
-		j++;
-	}
+	img.img = mlx_xpm_file_to_image(mlx, floor, &img_width, &img_height);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	img.img = mlx_xpm_file_to_image(mlx, player, &img_width, &img_height);
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 150, 150);
+	//mlx_key_hook(mlx_win, my_key_function, );
 	mlx_loop(mlx);
 }
