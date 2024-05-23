@@ -6,31 +6,51 @@
 #    By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 13:44:02 by eburnet           #+#    #+#              #
-#    Updated: 2023/12/18 14:35:47 by eburnet          ###   ########.fr        #
+#    Updated: 2024/05/14 16:44:35 by eburnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = solong.a
-CFLAGS = -Wall -Wextra #-Werror
-SRCS = main.c
+NAME = solong
+CFLAGS = -Wall -Wextra -Werror
+SRCS = main.c ./GNL/get_next_line_utils.c ./GNL/get_next_line.c
 OBJS = $(SRCS:.c=.o)
-LINKS = -lmlx -lXext -lX11
-HEADERS =
+CC = gcc
+HEADERS = so_long.h
+LIBFT_PATH = ./LIBFT
+MLX_PATH = ./minilibx-linux
 
-.c.o : 
-	gcc $(CFLAGS) $(HEADERS) -c $<
+.PHONY: all clean fclean re
 
-$(NAME): $(OBJS)
-	gcc $(SRCS) -o $(NAME) $(CFLAGS) $(LINKS)
+all: $(NAME)
 
-all : $(NAME)
+$(NAME): $(OBJS) $(LIBFT_PATH)/libft.a $(MLX_PATH)/libmlx.a
+	@echo "Linking $@..."
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -L$(MLX_PATH) -lmlx -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
+	@echo "Executable $(NAME) created."
+	
+%.o: %.c $(HEADERS)
+	@$(CC) $(CFLAGS) -I $(MLX_PATH) -O3 -c $< -o $@ >/dev/null
+
+$(LIBFT_PATH)/libft.a:
+	@echo "Building libft..."
+	@make -C $(LIBFT_PATH) >/dev/null
+	
+$(MLX_PATH)/libmlx.a:
+	@echo "Building MiniLibX..."
+	@make -C $(MLX_PATH) >/dev/null
 
 clean :
-	rm -f $(OBJS)
+	@echo "Cleaning object files..."
+	@rm -f $(OBJS)
+	@make -C $(LIBFT_PATH) clean >/dev/null
+	@make -C $(MLX_PATH) clean >/dev/null
+	@echo "Solong cleaned."
 
-fclean : clean
-	rm -f $(NAME)
+fclean :
+	@echo "Cleaning all generated files..."
+	@rm -f $(NAME)
+	@make -C $(LIBFT_PATH) fclean >/dev/null
+	@make -C $(MLX_PATH) clean >/dev/null
+	@echo "Solong Fcleaned."
 
 re : fclean all
-	
-.PHONY : all clean flcean re
