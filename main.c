@@ -6,23 +6,23 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 10:26:16 by eburnet           #+#    #+#             */
-/*   Updated: 2024/05/17 11:16:19 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/05/28 16:35:34 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #define WINDOW_WIDTH 500
 #define WINDOW_HEIGHT 500
-
+ 
 void	image(t_data *img)
 {
-	img->img = mlx_xpm_file_to_image(img->mlx, "./floor.xpm",
+	img->img = mlx_xpm_file_to_image(img->mlx, "./assets/floor.xpm",
 			&img->img_width, &img->img_height);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
-	img->img = mlx_xpm_file_to_image(img->mlx, "./wall.xpm",
+	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 10, 10);
+	img->img = mlx_xpm_file_to_image(img->mlx, "./assets/wall.xpm",
 			&img->img_width, &img->img_height);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 50, 50);
-	img->img = mlx_xpm_file_to_image(img->mlx, "./player.xpm",
+	img->img = mlx_xpm_file_to_image(img->mlx, "./assets/player.xpm",
 			&img->img_width, &img->img_height);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, img->x, img->y);
 }
