@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 10:26:16 by eburnet           #+#    #+#             */
-/*   Updated: 2024/05/28 16:35:34 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/05/31 15:38:32 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,79 @@
 #define WINDOW_WIDTH 500
 #define WINDOW_HEIGHT 500
  
-void	image(t_data *img)
+int	ft_put_image(t_data *data)
 {
-	img->img = mlx_xpm_file_to_image(img->mlx, "./assets/floor.xpm",
-			&img->img_width, &img->img_height);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 10, 10);
-	img->img = mlx_xpm_file_to_image(img->mlx, "./assets/wall.xpm",
-			&img->img_width, &img->img_height);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 50, 50);
-	img->img = mlx_xpm_file_to_image(img->mlx, "./assets/player.xpm",
-			&img->img_width, &img->img_height);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, img->x, img->y);
-}
-
-int	key_hook(int keycode, t_data *img)
-{
-	printf("Key: %d = %c\n", keycode, keycode);
-	if (keycode == 65307)
-		exit(0);
-	else if (keycode == 119)
-		img->y -= 10;
-	else if (keycode == 115)
-		img->y += 10;
-	else if (keycode == 100)
-		img->x += 10;
-	else if (keycode == 97)
-		img->x -= 10;
-	image(img);
+	data->floor = mlx_xpm_file_to_image(data->mlx, "./assets/floor.xpm", &data->img_width, &data->img_height);
+	if (data->floor == NULL)
+		return (1);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->floor, 10, 10);
+	data->wall = mlx_xpm_file_to_image(data->mlx, "./assets/wall.xpm", &data->img_width, &data->img_height);
+	if (data->wall == NULL)
+		return (1);	
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->wall, 50, 50);
 	return (0);
 }
 
-int	main(void)
+int	ft_put_player(t_data *data)
 {
-	t_data	img;
+	data->floor = mlx_xpm_file_to_image(data->mlx, "./assets/floor.xpm", &data->img_width, &data->img_height);
+	if (data->floor == NULL)
+		return (1);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->floor, data->prev_x, data->prev_y);
+	data->player = mlx_xpm_file_to_image(data->mlx, "./assets/player.xpm", &data->img_width, &data->img_height);
+	if (data->player == NULL)
+		return (1);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->player, data->x, data->y);
+	return (0);
+}
 
-	img.mlx = mlx_init();
-	img.mlx_win = mlx_new_window(img.mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
-			"So long");
-	img.x = 150;
-	img.y = 150;
-	image(&img);
-	/* mlx_string_put(img.mlx, img.mlx_win, WINDOW_WIDTH / 2,
-		WINDOW_HEIGHT / 2, 0xffffff, "Salut"); */
-	mlx_key_hook(img.mlx_win, (int (*)(int, void *))key_hook, &img);
-	mlx_loop(img.mlx);
-	return (1);
+int	ft_key_hook(int keycode, t_data *data)
+{
+	data->prev_y = data->y;
+	data->prev_x = data->x;
+	if (keycode == 65307)
+	{
+		mlx_destroy_window(data->mlx, data->mlx_win);
+		exit(0);
+	}
+	else if (keycode == 119)
+		data->y -= 32;
+	else if (keycode == 115)
+		data->y += 32;
+	else if (keycode == 100)
+		data->x += 32;
+	else if (keycode == 97)
+		data->x -= 32;
+	//printf("Movements: %d\n", );
+	ft_put_player(data);
+	return (0);
+}
+
+int	ft_x_close(t_data *data)
+{
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	free(data->mlx);
+	free(data);
+	exit(0);
+	return (0);
+}
+
+int	main(int argc, char *argv[])
+{
+	t_data	data;
+
+	if (argc != 2)
+		return (1);
+	if (ft_parsing(&data, argv[1]) == 1)
+		return (1);
+	data.mlx = mlx_init();
+	data.mlx_win = mlx_new_window(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "So long");
+	data.x = 150;
+	data.y = 150;
+	if (ft_put_image(&data))
+		return (1);
+	mlx_key_hook(data.mlx_win, (int (*)(int, void *))ft_key_hook, &data);
+	mlx_hook(data.mlx_win, 17, 0, ft_x_close, &data);
+	mlx_loop(data.mlx);
+	return (0);
 }

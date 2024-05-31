@@ -6,13 +6,13 @@
 #    By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 13:44:02 by eburnet           #+#    #+#              #
-#    Updated: 2024/05/14 16:44:35 by eburnet          ###   ########.fr        #
+#    Updated: 2024/05/31 16:30:59 by eburnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = solong
-CFLAGS = -Wall -Wextra -Werror
-SRCS = main.c ./GNL/get_next_line_utils.c ./GNL/get_next_line.c
+CFLAGS = -Wall -Wextra -Werror -g3
+SRCS = main.c ft_map.c ft_utils.c ./GNL/get_next_line_utils.c ./GNL/get_next_line.c
 OBJS = $(SRCS:.c=.o)
 CC = gcc
 HEADERS = so_long.h
@@ -48,6 +48,7 @@ clean :
 
 fclean :
 	@echo "Cleaning all generated files..."
+	@rm -f $(OBJS)
 	@rm -f $(NAME)
 	@make -C $(LIBFT_PATH) fclean >/dev/null
 	@make -C $(MLX_PATH) clean >/dev/null
