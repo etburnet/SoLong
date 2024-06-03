@@ -6,13 +6,13 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:25:32 by eburnet           #+#    #+#             */
-/*   Updated: 2024/05/31 15:52:44 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/03 16:51:22 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_free_split(char	**tab)
+void	free_tab(char	**tab)
 {
 	int	i;
 
@@ -20,40 +20,6 @@ void	ft_free_split(char	**tab)
 	while (tab[i])
 		free (tab[i++]);
 	free (tab);
-}
-
-int	ft_x_check(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] != '1')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	*ft_line_len(char **map, int len, int *line_len)
-{
-	int	i;
-	int	tmp;
-	
-	i = 0;
-	while (i < len)
-	{
-		tmp = 0;
-		while (map[i][tmp] != '\0')
-			tmp++;
-		if (*line_len == 0)
-			*line_len = tmp;
-		if (tmp != *line_len)
-			return (&map[i][tmp]);
-		i++;
-	}
-	return NULL;
 }
 
 char	*ft_concat(int fd_map)
@@ -77,4 +43,51 @@ char	*ft_concat(int fd_map)
 	}
 	free(tmp);
 	return (concat);
+}
+
+int	ft_init_image(t_data *data)
+{
+	data->img_wall = mlx_xpm_file_to_image(data->mlx, "./assets/wall.xpm", &data->img_width, &data->img_height);
+	if (data->img_wall == NULL)
+		return (1);
+	data->img_floor = mlx_xpm_file_to_image(data->mlx, "./assets/floor.xpm", &data->img_width, &data->img_height);
+	if (data->img_floor == NULL)
+		return (1);
+	data->img_item = mlx_xpm_file_to_image(data->mlx, "./assets/item.xpm", &data->img_width, &data->img_height);
+	if (data->img_item == NULL)
+		return (1);
+	data->img_player = mlx_xpm_file_to_image(data->mlx, "./assets/player.xpm", &data->img_width, &data->img_height);
+	if (data->img_player == NULL)
+		return (1);
+	data->img_door = mlx_xpm_file_to_image(data->mlx, "./assets/door.xpm", &data->img_width, &data->img_height);
+	if (data->img_door == NULL)
+		return (1);
+	return (0);
+}
+
+int	ft_valid_action(t_data *data, char xy, int pm)
+{
+
+
+	if (xy == 'x')
+	{
+		if (data->map[data->y][data->x + pm] == '1')
+			return (1);
+		if (data->map[data->y][data->x + pm] == 'C')
+			data->items--;
+		if (data->map[data->y][data->x + pm] == 'E' && data->items == 0)
+			ft_x_close(data);
+	}
+	else if (xy == 'y')
+	{
+		if (data->map[data->y + pm][data->x] == '1')
+			return (1);
+		if (data->map[data->y + pm][data->x] == 'C')
+			data->items--;
+		if (data->map[data->y + pm][data->x] == 'E' && data->items == 0)
+			ft_x_close(data);
+	}
+	data->mooves++;
+	ft_printf("Mooves: %d\n", data->mooves);
+	return (0);
 }

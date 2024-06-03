@@ -6,13 +6,13 @@
 #    By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 13:44:02 by eburnet           #+#    #+#              #
-#    Updated: 2024/05/31 16:30:59 by eburnet          ###   ########.fr        #
+#    Updated: 2024/06/03 12:39:45 by eburnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = solong
 CFLAGS = -Wall -Wextra -Werror -g3
-SRCS = main.c ft_map.c ft_utils.c ./GNL/get_next_line_utils.c ./GNL/get_next_line.c
+SRCS = main.c ft_map.c ft_utils.c ft_map_utils.c ./GNL/get_next_line_utils.c ./GNL/get_next_line.c
 OBJS = $(SRCS:.c=.o)
 CC = gcc
 HEADERS = so_long.h
