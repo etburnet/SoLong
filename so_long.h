@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:08:54 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/03 16:41:07 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/04 15:34:26 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int		ft_file_type(char *file);
 int		ft_find_start(t_data *data);
 void	ft_algo_diff(int x, int y, t_data *data);
 int		ft_init_image(t_data *data);
-int		ft_valid_action(t_data *data, char xy, int pm);
+int		ft_x_action(t_data *data, int pm);
+int		ft_y_action(t_data *data, int pm);
 int		ft_x_close(t_data *data);
 
 #endif

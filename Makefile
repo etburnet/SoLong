@@ -6,11 +6,11 @@
 #    By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/18 13:44:02 by eburnet           #+#    #+#              #
-#    Updated: 2024/06/03 12:39:45 by eburnet          ###   ########.fr        #
+#    Updated: 2024/06/04 16:58:01 by eburnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = solong
+NAME = so_long
 CFLAGS = -Wall -Wextra -Werror -g3
 SRCS = main.c ft_map.c ft_utils.c ft_map_utils.c ./GNL/get_next_line_utils.c ./GNL/get_next_line.c
 OBJS = $(SRCS:.c=.o)

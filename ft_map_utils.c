@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:24:40 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/03 15:10:38 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:12:24 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ int	ft_file_type(char *file)
 	int	l;
 
 	l = ft_strlen(file);
-
-	if (file[l-1] != 'r' && file[l-2] != 'e'
-		&& file[l-3] != 'b' && file[l-4] != '.')
+	if (ft_strncmp(&file[l - 4], ".ber", 3))
 		return (1);
 	if (open(file, __O_DIRECTORY) >= 0)
 		return (1);
