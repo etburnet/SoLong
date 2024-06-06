@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 10:26:16 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/04 17:02:08 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/06 11:38:10 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 int	ft_x_close(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->mlx_win);
+	if (data->img_door != NULL)
+		mlx_destroy_image(data->mlx, data->img_door);
+	if (data->img_wall != NULL)
+		mlx_destroy_image(data->mlx, data->img_wall);
+	if (data->img_item != NULL)
+		mlx_destroy_image(data->mlx, data->img_item);
+	if (data->img_floor != NULL)
+		mlx_destroy_image(data->mlx, data->img_floor);
+	if (data->img_player != NULL)
+		mlx_destroy_image(data->mlx, data->img_player);
+	mlx_destroy_display(data->mlx);
 	free(data->mlx);
 	free_tab(data->dup_map);
 	free_tab(data->map);
@@ -87,11 +98,12 @@ int	main(int argc, char *argv[])
 	data.mlx_win = mlx_new_window(data.mlx, (data.len_x + 1) * TILE_SIZE,
 			(data.len_y) * TILE_SIZE, "So long");
 	if (ft_init_image(&data))
-		return (ft_putstr_fd("Error\nImg unreachable\n", 2), 1);
+		return (ft_x_close(&data),
+			ft_putstr_fd("Error\nImg unreachable\n", 2), 1);
 	ft_put_image(&data);
 	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img_player,
 		data.x * TILE_SIZE, data.y * TILE_SIZE);
-	mlx_key_hook(data.mlx_win, (int (*)(int, void *))ft_key_hook, &data);
+	mlx_key_hook(data.mlx_win, ft_key_hook, &data);
 	mlx_hook(data.mlx_win, 17, 0, ft_x_close, &data);
 	mlx_loop(data.mlx);
 	return (0);

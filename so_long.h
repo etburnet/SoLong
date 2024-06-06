@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:08:54 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/04 15:34:26 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/06 11:04:02 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include "./LIBFT/libft.h"
 # include "./minilibx-linux/mlx.h"
 # include "./GNL/get_next_line.h"
-
 
 # ifndef TILE_SIZE
 #  define TILE_SIZE 32

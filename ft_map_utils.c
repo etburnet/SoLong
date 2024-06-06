@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:24:40 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/04 17:12:24 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/06 11:04:05 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*ft_line_len(char **map, int len, int *line_len)
 {
 	int	i;
 	int	tmp;
-	
+
 	i = 0;
 	while (i < len)
 	{
@@ -55,7 +55,7 @@ void	*ft_line_len(char **map, int len, int *line_len)
 			return (&map[i][tmp]);
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }
 
 int	ft_find_start(t_data *data)

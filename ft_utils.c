@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:25:32 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/04 16:13:23 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/06 11:34:07 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_concat(int fd_map)
 	concat = ft_strdup("");
 	buff = get_next_line(fd_map);
 	if (buff == NULL)
-		return (NULL);
+		return (free(concat), NULL);
 	while (buff != NULL)
 	{
 		tmp = concat;
@@ -48,23 +48,23 @@ char	*ft_concat(int fd_map)
 int	ft_init_image(t_data *data)
 {
 	data->img_wall = mlx_xpm_file_to_image(data->mlx,
-		"./assets/wall.xpm", &data->img_width, &data->img_height);
+			"./assets/wall.xpm", &data->img_width, &data->img_height);
 	if (data->img_wall == NULL)
 		return (1);
 	data->img_floor = mlx_xpm_file_to_image(data->mlx,
-		"./assets/floor.xpm", &data->img_width, &data->img_height);
+			"./assets/floor.xpm", &data->img_width, &data->img_height);
 	if (data->img_floor == NULL)
 		return (1);
 	data->img_item = mlx_xpm_file_to_image(data->mlx,
-		"./assets/item.xpm", &data->img_width, &data->img_height);
+			"./assets/item.xpm", &data->img_width, &data->img_height);
 	if (data->img_item == NULL)
 		return (1);
 	data->img_player = mlx_xpm_file_to_image(data->mlx,
-		"./assets/player.xpm", &data->img_width, &data->img_height);
+			"./assets/player.xpm", &data->img_width, &data->img_height);
 	if (data->img_player == NULL)
 		return (1);
 	data->img_door = mlx_xpm_file_to_image(data->mlx,
-		"./assets/door.xpm", &data->img_width, &data->img_height);
+			"./assets/door.xpm", &data->img_width, &data->img_height);
 	if (data->img_door == NULL)
 		return (1);
 	return (0);
