@@ -6,31 +6,39 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 10:26:16 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/06 11:38:10 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/07 18:37:26 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+int	ft_iter_null(t_data *data, void *img)
+{
+	if (img == NULL)
+		return (1);
+	else
+		data->loaded_img++;
+	return (0);
+}
+
 int	ft_x_close(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->mlx_win);
-	if (data->img_door != NULL)
-		mlx_destroy_image(data->mlx, data->img_door);
-	if (data->img_wall != NULL)
+	if (data->loaded_img > 0)
 		mlx_destroy_image(data->mlx, data->img_wall);
-	if (data->img_item != NULL)
-		mlx_destroy_image(data->mlx, data->img_item);
-	if (data->img_floor != NULL)
+	if (data->loaded_img > 1)
 		mlx_destroy_image(data->mlx, data->img_floor);
-	if (data->img_player != NULL)
+	if (data->loaded_img > 2)
+		mlx_destroy_image(data->mlx, data->img_item);
+	if (data->loaded_img > 3)
 		mlx_destroy_image(data->mlx, data->img_player);
+	if (data->loaded_img > 4)
+		mlx_destroy_image(data->mlx, data->img_door);
+	mlx_destroy_window(data->mlx, data->mlx_win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
 	free_tab(data->dup_map);
 	free_tab(data->map);
 	exit(0);
-	free(data);
 	return (0);
 }
 
@@ -94,9 +102,14 @@ int	main(int argc, char *argv[])
 	if (ft_parsing(&data, argv[1]) == 1)
 		return (1);
 	data.mooves = 0;
+	data.loaded_img = 0;
 	data.mlx = mlx_init();
+	if (data.mlx == NULL)
+		return (ft_putstr_fd("Error\nMlx init failed\n", 2), 1);
 	data.mlx_win = mlx_new_window(data.mlx, (data.len_x + 1) * TILE_SIZE,
 			(data.len_y) * TILE_SIZE, "So long");
+	if (data.mlx_win == NULL)
+		return (ft_putstr_fd("Error\nMlx win init failed\n", 2), 1);
 	if (ft_init_image(&data))
 		return (ft_x_close(&data),
 			ft_putstr_fd("Error\nImg unreachable\n", 2), 1);

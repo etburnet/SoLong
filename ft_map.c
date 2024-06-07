@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:17:21 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/06 11:48:19 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/07 17:44:11 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ int	ft_verif_map(t_data *data)
 	while (data->map[data->len_y] != NULL)
 		data->len_y++;
 	if (ft_line_len(data->map, data->len_y, &data->len_x) != NULL)
-		return (free_tab(data->map), ft_putstr_fd("Error\nLine size\n", 2), 1);
+		return (free_tab(data->map), ft_putstr_fd(ERR_LINE, 2), 1);
 	if ((data->len_y * TILE_SIZE) > 1000 || (data->len_x * TILE_SIZE) > 1800)
-		return (free_tab(data->map), ft_putstr_fd("Error\nUnplayable\n", 2), 1);
+		return (free_tab(data->map), ft_putstr_fd(ERR_UNPLAY, 2), 1);
 	if (ft_x_check(data->map[0]) || ft_x_check(data->map[data->len_y - 1]))
-		return (free_tab(data->map), ft_putstr_fd("Error\nHole in edge\n", 2), 1);
+		return (free_tab(data->map), ft_putstr_fd(ERR_HOLE, 2), 1);
 	data->len_x--;
 	if (ft_find_start(data) == 1)
-		return (free_tab(data->map), ft_putstr_fd("Error\nNo 'P'\n", 2), 1);
+		return (free_tab(data->map), ft_putstr_fd(ERR_P, 2), 1);
 	while (data->map[i])
 	{
 		if (data->map[i][0] != '1' || data->map[i][data->len_x] != '1')
 			return (free_tab(data->map),
-				ft_putstr_fd("Error\nHole in edges\n", 2), 1);
+				ft_putstr_fd(ERR_HOLE, 2), 1);
 		i++;
 	}
 	return (0);
@@ -56,7 +56,7 @@ int	ft_verif_map(t_data *data)
 int	ft_error(int items, int e, int p)
 {
 	if (items < 1)
-		return (ft_putstr_fd("Error\nAt leat one 'C'\n", 2), 1);
+		return (ft_putstr_fd("Error\nAt least one 'C'\n", 2), 1);
 	if (e != 1)
 		return (ft_putstr_fd("Error\nOne and only one 'E'\n", 2), 1);
 	if (p != 1)
