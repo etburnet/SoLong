@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 10:26:16 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/07 18:37:26 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/08 11:05:22 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ int	main(int argc, char *argv[])
 			(data.len_y) * TILE_SIZE, "So long");
 	if (data.mlx_win == NULL)
 		return (ft_putstr_fd("Error\nMlx win init failed\n", 2), 1);
-	if (ft_init_image(&data))
-		return (ft_x_close(&data),
-			ft_putstr_fd("Error\nImg unreachable\n", 2), 1);
+	if (ft_init_image(&data) == 1)
+		return (ft_putstr_fd("Error\nImg unreachable\n", 2),
+			ft_x_close(&data), 1);
 	ft_put_image(&data);
 	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img_player,
 		data.x * TILE_SIZE, data.y * TILE_SIZE);
